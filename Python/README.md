@@ -1,16 +1,20 @@
-# Perceptron
+#Perceptron
 
-### What is this?
+(For usage documentation, see the Python or C++ directories)
+
+###What is this?
 A class implementation of a usuable Perceptron in Python and C++.
 
-### What is a Perceptron?
+###What is a Perceptron?
 https://en.wikipedia.org/wiki/Perceptron
 
-### TL;DR?
+###TL;DR?
 A supervised learning binary classifier.
 
-### What?
+###What?
 The perceptron can be used to classify data by learning from existing data. It can be taught to classify linearbly separable data with pretty decent precision.
+
+Where w is the weight vector, x is the feature vector, and b is the bias. The goal of this is to determine a decision boundary that separates the data. The bias basically tranlates that boundary. You'll notice it looks similar to the line function y=mx+b. You can visualize it similarly, but but because x has two variables, it would be graphed in a 3D space.
 
 A common example is logical conjunctions. Take the OR function for example. If you wanted to implement a function that replaticated the behavior, we would start with the below known solutions:
 
@@ -36,3 +40,9 @@ So if the complexity is around the same, why would you use a Percpetron instead 
 ###How Does It Work?
 The wikipedia page explains:
 https://en.wikipedia.org/wiki/Perceptron
+
+###How about a multiclass classifier?
+In the works.
+
+###Usage
+See the Python and C++ directories for a usage doc.

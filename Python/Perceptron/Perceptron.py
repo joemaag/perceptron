@@ -9,7 +9,7 @@ class Perceptron:
 
 		return -1 if total <= 0 else 1
 
-	def train(self, trainingSet, numberOfFeatures, learningRate = 0.5):
+	def train(self, trainingSet, numberOfFeatures, learningRate = 0.2):
 		allPassed = False
 		cycleCount = 0
 		bias = 0
