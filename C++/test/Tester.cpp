@@ -2,7 +2,7 @@
 #include <iostream>
 
 void testOR() {
-	Perceptron perc = Perceptron("OR.txt");
+	Perceptron perc = Perceptron("test/OR.txt");
 	bool pass = true;
 	int ex[] = {0,0};
 	if (perc.classify(ex) != -1) {
@@ -32,7 +32,7 @@ void testOR() {
 }
 
 void testAND() {
-	Perceptron perc = Perceptron("AND.txt");
+	Perceptron perc = Perceptron("test/AND.txt");
 	bool pass = true;
 	int ex[] = {0,0};
 	if (perc.classify(ex) != -1) {
@@ -62,7 +62,7 @@ void testAND() {
 }
 
 void testOR3() {
-	Perceptron perc = Perceptron("OR3.txt");
+	Perceptron perc = Perceptron("test/OR3.txt");
 	bool pass = true;
 	int ex[] = {0,0,0};
 	// 0 0 0
@@ -126,7 +126,7 @@ void testOR3() {
 }
 
 void testAtLeastTwo3() {
-	Perceptron perc = Perceptron("atLeastTwo3.txt");
+	Perceptron perc = Perceptron("test/atLeastTwo3.txt");
 	bool pass = true;
 	int ex[] = {0,0,0};
 	// 0 0 0
