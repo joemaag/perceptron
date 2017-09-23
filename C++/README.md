@@ -1,18 +1,16 @@
-# Perceptron - Python
-The Perceptron module includes the Perceptron class that can be imported like any other Python module.
+# Perceptron - C++
 
 ### Quick Test Run
-You can run the unit tests pretty easily in terminal by running the test file:
+You can compile and run the test using `make` to produce the executable.
 
-    cd /path/to/Perceptron/Python
-    python PerceptronTest.py
+    cd /path/to/Perceptron/C++
+    make
 
-### Interpreter
-You can import the Perceptron class into your Python interpreter:
+The resulting PerceptronTest executable can then be run:
 
-    cd /path/to/Perceptron/Python
-    python
-    from Perceptron import Perceptron
+```
+./PerceptronTest
+```
 
 ## Usage
 When creating a Perceptron object, you must include 1.) training data and 2.) number of features.
@@ -43,5 +41,5 @@ Where:
 
 This will return a classification of `1` or `-1`.
 
-##Debug Print Statements
+## Debug Print Statements
 In Perceptron.py you'll see a `debug` variable set to `False`. Set this to `True` to see some insight into the weight training process.
