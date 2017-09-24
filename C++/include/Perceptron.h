@@ -12,6 +12,7 @@ class Perceptron {
 
 	public:
 		Perceptron(std::string trainingDataFileName, bool printDebug = false);
+		~Perceptron();
 		int classify(int *featureSet);
 		void print();
 

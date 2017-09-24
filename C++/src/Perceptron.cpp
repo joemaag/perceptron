@@ -7,7 +7,7 @@ Perceptron::Perceptron(std::string trainingDataFileName, bool printDebug) {
 	bias = 0;
 	int** trainingData = readTrainingFile(trainingDataFileName, numberOfTestCases);
 	train(trainingData, numberOfTestCases);
-	delete trainingData;
+	delete[] trainingData;
 };
 
 int** Perceptron::readTrainingFile(std::string fileName, int &numberOfTestCases) {
@@ -49,14 +49,14 @@ int** Perceptron::readTrainingFile(std::string fileName, int &numberOfTestCases)
 	}
 
 	if (debug) {
-		std::cout << "File data (read):";
+		std::cout << "Training File Data:";
 		for (int i = 0; i < numberOfTestCases; i++) {
 			std::cout << "\n";
 			for (int x = 0; x < this->numberOfFeatures + 1; x++) {
 				std::cout << trainingData[i][x] << " ";
 			}
 		}
-		std::cout << "\n";
+		std::cout << "\n\n";
 	}
 
 	return trainingData;
@@ -66,7 +66,7 @@ void Perceptron::train(int** trainingData, int &numberOfTestCases) {
 	int numberOfCycles = 0;
 	bool allPassed = false;
 	weights = new float[this->numberOfFeatures]();
-	float learningRate = 0.5;
+	float learningRate = 0.2;
 
 	while (!allPassed) {
 		allPassed = true;
@@ -77,39 +77,48 @@ void Perceptron::train(int** trainingData, int &numberOfTestCases) {
 			break;
 		}
 
-		for (int testCase = 0; testCase < numberOfTestCases; testCase++) {
+		if (debug) std::cout << "Training Pass #" << numberOfCycles << "\n";
+
+		for (int trainingCase = 0; trainingCase < numberOfTestCases; trainingCase++) {
 			float total = bias;
-			int result = *trainingData[testCase];
+			int result = *trainingData[trainingCase];
 			for (int caseWeightCounter = 0; caseWeightCounter < this->numberOfFeatures; caseWeightCounter++) {
-				total += trainingData[testCase][caseWeightCounter + 1] * this->weights[caseWeightCounter];
+				total += trainingData[trainingCase][caseWeightCounter + 1] * this->weights[caseWeightCounter];
 			}
 
 			if (result > 0) {
 				if (total  <= 0) {
-					//add
-					if (debug) std::cout << "(" << numberOfCycles << ") " << total << " NOT > 0\nNew Weights = [";
+					//increase weights
+					if (debug) std::cout << "\tTraining Set #" << trainingCase << ": " << total << " NOT > 0\n\tNew Weights = [";
 					for (int weightCount = 0; weightCount < this->numberOfFeatures; weightCount++) {
-						this->weights[weightCount] = this->weights[weightCount] + trainingData[testCase][weightCount + 1] * learningRate;
-						if (debug) std::cout << this->weights[weightCount] << ", ";
+						this->weights[weightCount] = this->weights[weightCount] + trainingData[trainingCase][weightCount + 1] * learningRate;
+						if (debug) std::cout << this->weights[weightCount] << ((weightCount + 1 < this->numberOfFeatures) ? ", " : "]\n");	
 					}
 					bias += learningRate;
-					if (debug) std::cout << "]\nNew bias = " << bias << "\n";
+					if (debug) std::cout << "\tNew bias = " << bias << "\n\n";
 					allPassed = false;
 				}
 			} else if (result < 0) {
 				if (total  > 0) {
-					//subtract
-					if (debug) std::cout << total << " NOT <= 0\nNew Weights = [";
+					//decrease weights
+					if (debug) std::cout << "\tTraining Set #" << trainingCase << ": " << total << " NOT <= 0\n\tNew Weights = [";
 					for (int weightCount = 0; weightCount < this->numberOfFeatures; weightCount++) {
-						this->weights[weightCount] = this->weights[weightCount] - trainingData[testCase][weightCount + 1] * learningRate;
-						if (debug) std::cout << this->weights[weightCount] << ", ";
+						this->weights[weightCount] = this->weights[weightCount] - trainingData[trainingCase][weightCount + 1] * learningRate;
+						if (debug) std::cout << this->weights[weightCount] << ((weightCount + 1 < this->numberOfFeatures) ? ", " : "]\n");
 					}
 					bias -= learningRate;
-					if (debug) std::cout << "]\nNew bias = " << bias << "\n";
+					if (debug) std::cout << "\tNew bias = " << bias << "\n\n";
 					allPassed = false;
 				}
 			}
 		}
+	}
+	if (debug) {
+		std::cout << "\nTRAINING COMPLETE\nFinal Weights = [";
+		for (int weightCount = 0; weightCount < this->numberOfFeatures; weightCount++) {
+			std::cout << this->weights[weightCount] << ((weightCount + 1 < this->numberOfFeatures) ? ", " : "]\n");;
+		}
+		std::cout << "Final Bias = " << bias << "\n\n";
 	}
 }
 
@@ -128,4 +137,8 @@ void Perceptron::print() {
 		std::cout << weights[i] << " ";
 	}
 	std::cout << "\nBias = " << this->bias << "\n";
+}
+
+Perceptron::~Perceptron(void) {
+   delete[] weights;
 }
