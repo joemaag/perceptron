@@ -4,9 +4,10 @@
 
 Perceptron::Perceptron(std::string trainingDataFileName, bool printDebug) {
 	debug = printDebug;
-	int** trainingData = readTrainingFile(trainingDataFileName, numberOfTestCases);
 	bias = 0;
+	int** trainingData = readTrainingFile(trainingDataFileName, numberOfTestCases);
 	train(trainingData, numberOfTestCases);
+	delete trainingData;
 };
 
 int** Perceptron::readTrainingFile(std::string fileName, int &numberOfTestCases) {
