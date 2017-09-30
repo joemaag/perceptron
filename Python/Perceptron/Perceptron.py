@@ -1,7 +1,5 @@
 class Perceptron:
 
-	debug = False
-
 	def classify(self, featureVector):
 		total = self.bias
 		for index, feature in enumerate(featureVector):
@@ -12,6 +10,7 @@ class Perceptron:
 	def train(self, trainingSet, numberOfFeatures, learningRate = 0.2):
 		allPassed = False
 		cycleCount = 0
+		traningPassCount = 0
 		bias = 0
 		weights = [0 for x in range(numberOfFeatures)]
 
@@ -20,14 +19,16 @@ class Perceptron:
 				print ('100 cycles ran - probably no solutions. Aborting...')
 				break
 			allPassed = True
+			traningPassCount += 1
+			if (self.debug): print "Training Pass #" + str(traningPassCount)
 
-			for instance in trainingSet:
+			for trainingCase in trainingSet:
 				cycleCount += 1
 				sum = bias
-				result = instance[-1]
+				result = trainingCase[-1]
 
-				for index, featureValue in enumerate(instance):
-					if index == len(instance) - 1:
+				for index, featureValue in enumerate(trainingCase):
+					if index == len(trainingCase) - 1:
 						continue
 					sum += featureValue * weights[index]
 
@@ -35,30 +36,29 @@ class Perceptron:
 					if sum <= 0:
 						#add
 						for index, weight in enumerate(weights):
-							weights[index] = weight + (instance[index] * learningRate)
+							weights[index] = weight + (trainingCase[index] * learningRate)
 						bias = bias + learningRate
 						allPassed = False
 						if self.debug:
-							print str(sum) + ' NOT > 0'
-							print 'New Weights = ' + str(weights) + '\nNew Bias = ' + str(bias)
+							print "\tTraining Case #" + str(cycleCount) + ": " + str(sum) + " NOT > 0"
+							print '\tNew Weights = ' + str(weights) + '\n\tNew Bias = ' + str(bias) + "\n"
 
 				elif result == -1:
 					if sum > 0:
 						#subtract
 						for index, weight in enumerate(weights):
-							weights[index] = weight - (instance[index] * learningRate)
+							weights[index] = weight - (trainingCase[index] * learningRate)
 						bias = bias - learningRate
 						allPassed = False
 						if self.debug:
-							print str(sum) + ' NOT < 0'
-							print 'New Weights = ' + str(weights) + '\nNew Bias = ' + str(bias)
+							print "\tTraining Case #" + str(cycleCount) + ": " + str(sum) + " NOT <= 0"
+							print '\tNew Weights = ' + str(weights) + '\n\tNew Bias = ' + str(bias) + "\n"
 
 		if self.debug:
-			print 'Done!\nWeights = ' + str(weights)
-			print 'Bias = ' + str(bias)
-			print 'Ran ' + str(cycleCount) + ' cycles\n'
+			print '\nTRAINING COMPLETE\nFinal Weights = ' + str(weights)
+			print 'Final Bias = ' + str(bias) + "\n\n"
 		return (weights, bias)
 
-
-	def __init__(self, trainingSet, numberOfFeatures):
+	def __init__(self, trainingSet, numberOfFeatures, debug=False):
+		self.debug = debug
 		self.weights, self.bias = self.train(trainingSet, numberOfFeatures)
