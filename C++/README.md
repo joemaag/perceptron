@@ -63,4 +63,9 @@ In Perceptron.cpp there is a `debug` variable set to `false` by default. You can
 Perceptron perc = Perceptron("OR.txt", false);
 ```
 
-To see debug statements in the tests, manually set these in the Perceptron constructors in the test file, Tester.cpp. Then run `make` again.
+Debug statements are enabled by default in the tests. To disable them, set the `-debug` flag to `false` when running:
+
+```
+./PerceptronTest -debug false
+```
+

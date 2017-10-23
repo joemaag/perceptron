@@ -43,5 +43,5 @@ Where:
 
 This will return a classification of `1` or `-1`.
 
-##Debug Print Statements
-In Perceptron.py you'll see a `debug` variable set to `False`. Set this to `True` to see some insight into the weight training process.
+## Debug Print Statements
+In Perceptron.py you'll see a `debug` variable set to `False` by default. Set this to `True` to see some insight into the weight training process. Debug statements are enabled in the tests.
